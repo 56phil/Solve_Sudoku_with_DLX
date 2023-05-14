@@ -10,92 +10,92 @@
  ChatGPT summary follows...
  ===============================================================================
  This program is a slightly modified version of a Sudoku solver. The solver is
-based on the Dancing Links algorithm, also known as Algorithm X, which is an
-efficient algorithm for solving exact cover problems. The main idea behind the
-algorithm is to represent the Sudoku puzzle as an exact cover problem and then
-use a backtracking algorithm to find the solutions.
+ based on the Dancing Links algorithm, also known as Algorithm X, which is an
+ efficient algorithm for solving exact cover problems. The main idea behind the
+ algorithm is to represent the Sudoku puzzle as an exact cover problem and then
+ use a backtracking algorithm to find the solutions.
 
-Let's go through the program step by step:
+ Let's go through the program step by step:
 
-1. The program starts by including the necessary C++ libraries and defining some
-constants and global variables.
+ 1. The program starts by including the necessary C++ libraries and defining
+ some constants and global variables.
 
-2. Next, a class named `DLX_Node` is defined. This class represents a node in
-the Dancing Links data structure. It has various member variables and
-accessor/mutator methods to manipulate the node's properties.
+ 2. Next, a class named `DLX_Node` is defined. This class represents a node in
+ the Dancing Links data structure. It has various member variables and
+ accessor/mutator methods to manipulate the node's properties.
 
-3. The `coverColumn` and `uncoverColumn` functions are defined. These functions
-are used to cover and uncover columns in the Dancing Links matrix.
+ 3. The `coverColumn` and `uncoverColumn` functions are defined. These functions
+ are used to cover and uncover columns in the Dancing Links matrix.
 
-4. The `findSolution` function is the main backtracking algorithm that finds all
-solutions to the Sudoku puzzle. It chooses a column to cover deterministically
-based on the size of the column. It recursively explores all possible
-combinations of rows until a valid solution is found.
+ 4. The `findSolution` function is the main backtracking algorithm that finds
+ all solutions to the Sudoku puzzle. It chooses a column to cover
+ deterministically based on the size of the column. It recursively explores all
+ possible combinations of rows until a valid solution is found.
 
-5. The `BuildSparseMatrix` function is responsible for building the initial
-sparse matrix representation of the Sudoku puzzle. It sets up the constraints
-for the exact cover problem.
+ 5. The `BuildSparseMatrix` function is responsible for building the initial
+ sparse matrix representation of the Sudoku puzzle. It sets up the constraints
+ for the exact cover problem.
 
-6. The `BuildLinkedList` function converts the sparse matrix representation into
-a toroidal doubly linked list, which is the data structure used in the Dancing
-Links algorithm. Each node in the list represents a 1 in the sparse matrix.
+ 6. The `BuildLinkedList` function converts the sparse matrix representation
+ into a toroidal doubly linked list, which is the data structure used in the
+ Dancing Links algorithm. Each node in the list represents a 1 in the sparse
+ matrix.
 
-7. The `TransformListToCurrentGrid` function covers the nodes in the list that
-correspond to the values already present in the Sudoku grid. This step
-eliminates the possibilities for those cells and reduces the search space.
+ 7. The `TransformListToCurrentGrid` function covers the nodes in the list that
+ correspond to the values already present in the Sudoku grid. This step
+ eliminates the possibilities for those cells and reduces the search space.
 
-8. There are also several helper functions for printing the Sudoku grid and
-converting between matrix and string representations of the puzzle.
+ 8. There are also several helper functions for printing the Sudoku grid and
+ converting between matrix and string representations of the puzzle.
 
-9. In the `main` function, the program reads the Sudoku puzzles from a file (or
-uses a default puzzle if the file cannot be opened). It then solves each puzzle
-using the `solvePuzzle` function. The execution time for each puzzle is measured
-using the `std::chrono` library.
+ 9. In the `main` function, the program reads the Sudoku puzzles from a file (or
+ uses a default puzzle if the file cannot be opened). It then solves each puzzle
+ using the `solvePuzzle` function. The execution time for each puzzle is
+ measured using the `std::chrono` library.
 
-10. After solving all the puzzles, the solutions are written to files.
+ 10. After solving all the puzzles, the solutions are written to files.
 
-11. Finally, the program outputs some statistics about the puzzles and returns
-`OK`.
+ 11. Finally, the program outputs some statistics about the puzzles and returns
+ `OK`.
 
-Overall, the program uses the Dancing Links algorithm to efficiently solve
-Sudoku puzzles by representing them as exact cover problems. The backtracking
-algorithm implemented in the program explores all possible combinations of rows
-in the Dancing Links matrix until a valid solution is found.
+ Overall, the program uses the Dancing Links algorithm to efficiently solve
+ Sudoku puzzles by representing them as exact cover problems. The backtracking
+ algorithm implemented in the program explores all possible combinations of rows
+ in the Dancing Links matrix until a valid solution is found.
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Exact cover problem defined:
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-An exact cover problem is a type of combinatorial optimization problem that
-involves finding a subset of a given collection of sets, called the "covering"
-sets, such that each element appears exactly once in the selected sets. In other
-words, the goal is to find a collection of sets that covers every element
-exactly once.
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ ChatGPT's exact cover problem defined:
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ An exact cover problem is a type of combinatorial optimization problem that
+ involves finding a subset of a given collection of sets, called the "covering"
+ sets, such that each element appears exactly once in the selected sets. In
+ other words, the goal is to find a collection of sets that covers every element
+ exactly once.
 
-Formally, an exact cover problem can be defined as follows: Given a universe U
-and a collection S of subsets of U, the problem is to find a subcollection S' of
-S such that every element in U appears in exactly one set in S'. The
-subcollection S' is an exact cover if and only if each element in U appears in
-exactly one set in S'.
+ Formally, an exact cover problem can be defined as follows: Given a universe U
+ and a collection S of subsets of U, the problem is to find a subcollection S'
+ of S such that every element in U appears in exactly one set in S'. The
+ subcollection S' is an exact cover if and only if each element in U appears in
+ exactly one set in S'.
 
-Exact cover problems can be represented as an exact cover matrix, where each row
-represents an element from the universe U and each column represents a subset
-from the collection S. The matrix contains binary values indicating whether an
-element is present in a particular subset.
+ Exact cover problems can be represented as an exact cover matrix, where each
+ row represents an element from the universe U and each column represents a
+ subset from the collection S. The matrix contains binary values indicating
+ whether an element is present in a particular subset.
 
-Solving an exact cover problem involves finding a solution that satisfies the
-exact cover condition. This can be achieved through various algorithms, such as
-the Dancing Links algorithm, which efficiently explores the solution space and
-finds all possible exact covers.
+ Solving an exact cover problem involves finding a solution that satisfies the
+ exact cover condition. This can be achieved through various algorithms, such as
+ the Dancing Links algorithm, which efficiently explores the solution space and
+ finds all possible exact covers.
 
-Exact cover problems have applications in various areas, including computer
-science, mathematics, and operations research. They are used to solve puzzles,
-scheduling problems, packing problems, and other optimization and constraint
-satisfaction problems. One famous example of an exact cover problem is the
-Sudoku puzzle, where the goal is to find an exact cover of a 9x9 grid with
-certain constraints on row, column, and box completeness.
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Exact cover problems have applications in various areas, including computer
+ science, mathematics, and operations research. They are used to solve puzzles,
+ scheduling problems, packing problems, and other optimization and constraint
+ satisfaction problems. One famous example of an exact cover problem is the
+ Sudoku puzzle, where the goal is to find an exact cover of a 9x9 grid with
+ certain constraints on row, column, and box completeness.
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  */
-
 #include <chrono>
 #include <cmath>
 #include <cstdio>
@@ -199,6 +199,7 @@ class GlobalData {
 public:
   static bool isSolved;
   static double puzzleTimeLimit;
+  static int expectedCSVlength;
   static std::chrono::steady_clock::time_point puzzleStartTime;
   static std::string inFileName;
   static std::string outFileName;
@@ -222,37 +223,44 @@ DLX_Node *orig_values[MAX_K];
 //=====================================================================//
 // --- initialize members of GlobalData ------------------------------ //
 //=====================================================================//
-
 std::chrono::steady_clock::time_point GlobalData::puzzleStartTime =
     std::chrono::steady_clock::now();
-std::string GlobalData::inFileName = "puzzles.txt";
-std::string GlobalData::outFileName = "solutions.txt";
+std::string GlobalData::inFileName = "";
+std::string GlobalData::outFileName = "";
 double GlobalData::puzzleTimeLimit = 2.5;
 bool GlobalData::isSolved = false;
 std::vector<puzzleStruct> GlobalData::puzzleStructs;
 puzzleStruct GlobalData::currentPuzzleStruct;
+int GlobalData::expectedCSVlength = 163;
 
 //=====================================================================//
 // --- Prototypes ---------------------------------------------------- //
 //=====================================================================//
-
-bool isTooSlow();
 bool isSolution(const std::string &s);
+bool isTooSlow();
+int getFileNamesFromCommandLine(int a, char *b[]);
 int getPuzzlesFromStorage();
 int matrix2string(std::string &result, int mat[][SIZE]);
 int string2matrix(std::string const rawSudoku, int mat[][SIZE]);
-int writeDuoeSolutions(std::string const fileName);
 int writeResults();
+std::string number2words(long num);
 void mapSolutionToGrid(int sudoku[][SIZE]);
+void primaryLoop(int (*activeMatrix)[9], int &totalSolutionsFound);
 void printGrid(int sudoku[][SIZE]);
 void solvePuzzle(int sudoku[][SIZE]);
+void wrapUp(int totalSolutionsFound);
 
 //=====================================================================//
 // --- MAIN ---------------------------------------------------------- //
 //=====================================================================//
+int main(int argc, char *argv[]) {
 
-int main() {
+  std::locale our_local(std::cout.getloc(), new separated);
+  std::cout.imbue(our_local);
 
+  getFileNamesFromCommandLine(argc, argv);
+
+  int totalSolutionsFound(0);
   int returnCode(OK);
   std::string defaultPuzzle("00000000000000308500102000000050700000400010009000"
                             "0000500000073002010000000040009");
@@ -262,10 +270,15 @@ int main() {
   if ((returnCode = getPuzzlesFromStorage()) != OK) {
     GlobalData::puzzleStructs.clear();
   }
+  primaryLoop(activeMatrix, totalSolutionsFound);
+  wrapUp(totalSolutionsFound);
+  return returnCode;
+}
 
-  std::locale our_local(std::cout.getloc(), new separated);
-  std::cout.imbue(our_local);
-
+//=====================================================================//
+// --- main loop ----------------------------------------------------- //
+//=====================================================================//
+void primaryLoop(int (*activeMatrix)[9], int &totalSolutionsFound) {
   int cntr(1);
 
   for (puzzleStruct &ps : GlobalData::puzzleStructs) {
@@ -284,17 +297,38 @@ int main() {
                          end - GlobalData::puzzleStartTime)
                          .count();
 
+    std::string sol1("");
+    long tempLong(GlobalData::currentPuzzleStruct.solutionStrings.size());
+    if (tempLong == 0) {
+      sol1 = "No solutions";
+    } else if (tempLong == 1) {
+      sol1 = "One solution";
+    } else {
+      sol1 = number2words(tempLong);
+      sol1 += " solutions";
+    }
+    sol1 += " identified.\n\n\n";
+
     std::cout << cntr++ << ". Execution time: " << ps.timeToSolve
               << " seconds\n"
-              << GlobalData::currentPuzzleStruct.solutionStrings.size()
-              << " Solutions found.\n\n";
+              << sol1;
 
+    totalSolutionsFound += tempLong;
     ps = GlobalData::currentPuzzleStruct;
   }
-  writeResults();
-  std::cout << "Puzzle count: " << GlobalData::puzzleStructs.size() << '\n';
-  return OK;
 }
+
+//=====================================================================//
+// --- wrao up ------------------------------------------------------- //
+//=====================================================================//
+void wrapUp(int totalSolutionsFound) {
+  writeResults();
+  std::cout << "\n\n"
+            << number2words(GlobalData::puzzleStructs.size())
+            << " puzzles processed\nA total of "
+            << number2words(totalSolutionsFound) << " solutions identified.";
+}
+
 //=====================================================================//
 // --- DLX Functions ------------------------------------------------- //
 //=====================================================================//
@@ -326,9 +360,9 @@ void uncoverColumn(DLX_Node *col) {
 }
 
 void findSolution(int kount) {
-    if (isTooSlow()) {
-      return;
-    }
+  if (isTooSlow()) {
+    return;
+  }
 
   if (HeadNode->getRight() == HeadNode) {
     int Grid[SIZE][SIZE] = {{0}};
@@ -372,7 +406,6 @@ void findSolution(int kount) {
 //=====================================================================//
 // --- Functions to turn a Sudoku grid into an Exact Cover problem --- //
 //=====================================================================//
-
 // --- BUILD THE INITIAL MATRIX CONTAINING ALL POSSIBILITIES --------- //
 void BuildSparseMatrix(bool matrix[ROW_NB][COL_NB]) {
 
@@ -501,7 +534,6 @@ void BuildLinkedList(bool matrix[ROW_NB][COL_NB]) {
 //=====================================================================//
 // --- COVERS VALUES THAT ARE ALREADY PRESENT IN THE GRID ------------ //
 //=====================================================================//
-
 void TransformListToCurrentGrid(int Puzzle[][SIZE]) {
   int index(0);
   for (int i(0); i < SIZE; i++)
@@ -530,7 +562,6 @@ void TransformListToCurrentGrid(int Puzzle[][SIZE]) {
 //=====================================================================//
 // --- Print Functions ----------------------------------------------- //
 //=====================================================================//
-
 void mapSolutionToGrid(int Sudoku[][SIZE]) {
 
   for (int i(0); solution[i] != nullptr; i++) {
@@ -546,7 +577,6 @@ void mapSolutionToGrid(int Sudoku[][SIZE]) {
 //=====================================================================//
 // --- PRINTS A SUDOKU GRID ------------------------------------------ //
 //=====================================================================//
-
 void printGrid(int Sudoku[][SIZE]) {
   std::string tempString("");
 
@@ -604,9 +634,9 @@ void solvePuzzle(int Sudoku[][SIZE]) {
   BuildLinkedList(matrix);
   TransformListToCurrentGrid(Sudoku);
   findSolution(0);
-  if (!GlobalData::isSolved) {
-    std::cout << "No Solution!" << std::endl;
-  }
+  // if (!GlobalData::isSolved) {
+  //   std::cout << "No Solution!" << std::endl;
+  // }
   GlobalData::isSolved = false;
 }
 
@@ -623,15 +653,22 @@ int writeResults() {
 }
 
 int getPuzzlesFromStorage() {
-  // one line one puzzle. line size must equal SIZE_SQUARED.
+  // one line one puzzle. line size must equal SIZE_SQUARED or 2SIZE_SQUARED
+  // + 1.
   std::ifstream inFile;
   inFile.open(GlobalData::inFileName.c_str());
   if (inFile.is_open()) {
+    puzzleStruct temp;
     std::string line("");
     while (getline(inFile, line)) {
+      GlobalData::currentPuzzleStruct.solutionStrings.clear();
+      if (line.size() == GlobalData::expectedCSVlength) { // sudoku,solution
+        temp.solutionStrings.push_back(
+            line.substr(SIZE_SQUARED + 1, SIZE_SQUARED));
+        line.resize(81);
+      }
       if (line.size() == SIZE_SQUARED) {
         // rawPuzzles.push_back(line);
-        puzzleStruct temp;
         temp.rawPuzzle = line;
         GlobalData::puzzleStructs.emplace_back(temp);
       }
@@ -640,7 +677,6 @@ int getPuzzlesFromStorage() {
   } else {
     return fileOpenError;
   }
-
   return OK;
 }
 
@@ -696,5 +732,65 @@ bool isTooSlow() {
     return true;
   }
   return false;
+}
+
+std::string number2words(long num) {
+  // Define the word representation for numbers from 0 to 19
+  const std::string lessThan20[] = {
+      "Zero",    "One",     "Two",       "Three",    "Four",
+      "Five",    "Six",     "Seven",     "Eight",    "Nine",
+      "Ten",     "Eleven",  "Twelve",    "Thirteen", "Fourteen",
+      "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+
+  // Define the word representation for multiples of 10 up to 90
+  const std::string tens[] = {"",      "",      "Twenty",  "Thirty", "Forty",
+                              "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
+  if (num < 20) {
+    return lessThan20[num];
+  } else if (num < 100) {
+    return tens[num / 10] + (num % 10 != 0 ? " " + lessThan20[num % 10] : "");
+  } else if (num < 1000) {
+    return lessThan20[num / 100] + " Hundred" +
+           (num % 100 != 0 ? " " + number2words(num % 100) : "");
+  } else if (num < 1000000) {
+    return number2words(num / 1000) + " Thousand" +
+           (num % 1000 != 0 ? " " + number2words(num % 1000) : "");
+  } else if (num < 1000000000) {
+    return number2words(num / 1000000) + " Million" +
+           (num % 1000000 != 0 ? " " + number2words(num % 1000000) : "");
+  } else {
+    return number2words(num / 1000000000) + " Billion" +
+           (num % 1000000000 != 0 ? " " + number2words(num % 1000000000) : "");
+  }
+}
+
+int getFileNamesFromCommandLine(int argc, char *argv[]) {
+  // Check for specific parameters
+  for (int i(1); i < argc; i++) {
+    std::string arg(argv[i]);
+
+    if (arg == "-h" || arg == "--help") {
+      // Display help message and exit
+      std::cout << "Assume you namrd the program solve...";
+      std::cout << "Usage: ./solve <input_file> <output_file>\n";
+      return 0;
+    } else {
+      // Assume it's a positional argument
+      std::cout << "Positional argument: " << arg << "\n";
+      switch (i) {
+
+      case 1:
+        GlobalData::inFileName = arg;
+        break;
+
+      case 2:
+        GlobalData::outFileName = arg;
+        break;
+      }
+    }
+  }
+
+  return OK;
 }
 // end of source code
