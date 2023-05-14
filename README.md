@@ -27,7 +27,9 @@ Send me a pull request. I ask that you please reach out first. Thank you.
 
 ## License
 
-N/A
+### Creative Commons Zero v1.0 Universal
+
+The Creative Commons CC0 Public Domain Dedication waives copyright interest in a work you've created and dedicates it to the world-wide public domain. Use CC0 to opt out of copyright entirely and ensure your work has the widest reach. As with the Unlicense and typical software licenses, CC0 disclaims warranties. CC0 is very similar to the Unlicense.
 
 ## Acknowledgements
 * Dr Knuth's *Dancing Links* Paper: http://www.ocf.berkeley.edu/~jchu/publicportal/sudoku/0011047.pdf
