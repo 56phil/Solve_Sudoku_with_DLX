@@ -9,59 +9,54 @@
  ===============================================================================
  ChatGPT summary follows...
  ===============================================================================
- This program is a slightly modified version of a Sudoku solver. The solver is
- based on the Dancing Links algorithm, also known as Algorithm X, which is an
- efficient algorithm for solving exact cover problems. The main idea behind the
- algorithm is to represent the Sudoku puzzle as an exact cover problem and then
- use a backtracking algorithm to find the solutions.
 
- Let's go through the program step by step:
+The code consists of several parts:
 
- 1. The program starts by including the necessary C++ libraries and defining
- some constants and global variables.
+1. Definitions and global variables: The necessary C++ libraries are included,
+and constants and global variables are defined.
 
- 2. Next, a class named `DLX_Node` is defined. This class represents a node in
- the Dancing Links data structure. It has various member variables and
- accessor/mutator methods to manipulate the node's properties.
+2. The `DLX_Node` class: This class represents a node in the Dancing Links data
+structure. It has member variables and accessor/mutator methods to manipulate
+the node's properties.
 
- 3. The `coverColumn` and `uncoverColumn` functions are defined. These functions
- are used to cover and uncover columns in the Dancing Links matrix.
+3. `coverColumn` and `uncoverColumn` functions: These functions are used to
+cover and uncover columns in the Dancing Links matrix.
 
- 4. The `findSolution` function is the main backtracking algorithm that finds
- all solutions to the Sudoku puzzle. It chooses a column to cover
- deterministically based on the size of the column. It recursively explores all
- possible combinations of rows until a valid solution is found.
+4. `findSolution` function: This is the main backtracking algorithm that finds
+all solutions to the Sudoku puzzle. It chooses a column to cover
+deterministically based on the size of the column. It recursively explores all
+possible combinations of rows until a valid solution is found.
 
- 5. The `BuildSparseMatrix` function is responsible for building the initial
- sparse matrix representation of the Sudoku puzzle. It sets up the constraints
- for the exact cover problem.
+5. `BuildSparseMatrix` function: This function builds the initial sparse matrix
+representation of the Sudoku puzzle. It sets up the constraints for the exact
+cover problem.
 
- 6. The `BuildLinkedList` function converts the sparse matrix representation
- into a toroidal doubly linked list, which is the data structure used in the
- Dancing Links algorithm. Each node in the list represents a 1 in the sparse
- matrix.
+6. `BuildLinkedList` function: This function converts the sparse matrix
+representation into a toroidal doubly linked list, which is the data structure
+used in the Dancing Links algorithm. Each node in the list represents a 1 in the
+sparse matrix.
 
- 7. The `TransformListToCurrentGrid` function covers the nodes in the list that
- correspond to the values already present in the Sudoku grid. This step
- eliminates the possibilities for those cells and reduces the search space.
+7. `TransformListToCurrentGrid` function: This function covers the nodes in the
+list that correspond to the values already present in the Sudoku grid. This step
+eliminates the possibilities for those cells and reduces the search space.
 
- 8. There are also several helper functions for printing the Sudoku grid and
- converting between matrix and string representations of the puzzle.
+8. Helper functions: There are several helper functions for printing the Sudoku
+grid and converting between matrix and string representations of the puzzle.
 
- 9. In the `main` function, the program reads the Sudoku puzzles from a file (or
- uses a default puzzle if the file cannot be opened). It then solves each puzzle
- using the `solvePuzzle` function. The execution time for each puzzle is
- measured using the `std::chrono` library.
+9. The `main` function: The program reads Sudoku puzzles from a file or uses a
+default puzzle if the file cannot be opened. It then solves each puzzle using
+the `solvePuzzle` function. The execution time for each puzzle is measured using
+the `std::chrono` library. Finally, the solutions are written to files.
 
- 10. After solving all the puzzles, the solutions are written to files.
-
- 11. Finally, the program outputs some statistics about the puzzles and returns
- `OK`.
-
- Overall, the program uses the Dancing Links algorithm to efficiently solve
- Sudoku puzzles by representing them as exact cover problems. The backtracking
- algorithm implemented in the program explores all possible combinations of rows
- in the Dancing Links matrix until a valid solution is found.
+The Dancing Links algorithm is an efficient algorithm for solving exact cover
+problems, and it has been adapted here to solve Sudoku puzzles. The algorithm
+recursively explores the solution space and finds all possible exact covers,
+which correspond to valid solutions to the Sudoku puzzle./ This program is a
+slightly modified version of a Sudoku solver. The solver is based on the Dancing
+Links algorithm, also known as Algorithm X, which is an efficient algorithm for
+solving exact cover problems. The main idea behind the algorithm is to represent
+the Sudoku puzzle as an exact cover problem and then use a backtracking
+algorithm to find the solutions.
 
  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  ChatGPT's exact cover problem defined:
@@ -104,7 +99,6 @@
 #include <iomanip>
 #include <iostream>
 #include <locale>
-#include <set>
 #include <string>
 #include <vector>
 
@@ -194,7 +188,6 @@ private:
 //=====================================================================//
 // --- Golbal consts & variables ------------------------------------- //
 //=====================================================================//
-
 class GlobalData {
 public:
   static bool isSolved;
@@ -297,17 +290,21 @@ void primaryLoop(int (*activeMatrix)[9], int &totalSolutionsFound) {
                          end - GlobalData::puzzleStartTime)
                          .count();
 
-    std::string sol1("");
     long tempLong(GlobalData::currentPuzzleStruct.solutionStrings.size());
-    if (tempLong == 0) {
-      sol1 = "No solutions";
-    } else if (tempLong == 1) {
-      sol1 = "One solution";
-    } else {
-      sol1 = number2words(tempLong);
-      sol1 += " solutions";
-    }
-    sol1 += " identified.\n\n\n";
+    std::string sol1(number2words(tempLong));
+    sol1 += " solution";
+    sol1 += (tempLong != 1 ? "s" : "");
+    sol1 += " identified.\n";
+
+    // if (tempLong == 0) {
+    //   sol1 = "No solutions";
+    // } else if (tempLong == 1) {
+    //   sol1 = "One solution";
+    // } else {
+    //   sol1 = number2words(tempLong);
+    //   sol1 += " solutions";
+    // }
+    // sol1 += " identified.\n\n\n";
 
     std::cout << cntr++ << ". Execution time: " << ps.timeToSolve
               << " seconds\n"
@@ -325,14 +322,13 @@ void wrapUp(int totalSolutionsFound) {
   writeResults();
   std::cout << "\n\n"
             << number2words(GlobalData::puzzleStructs.size())
-            << " puzzles processed\nA total of "
+            << " puzzles processed.\nA total of "
             << number2words(totalSolutionsFound) << " solutions identified.";
 }
 
 //=====================================================================//
 // --- DLX Functions ------------------------------------------------- //
 //=====================================================================//
-
 void coverColumn(DLX_Node *col) {
   col->getLeft()->setRight(col->getRight());
   col->getRight()->setLeft(col->getLeft());
@@ -568,6 +564,7 @@ void mapSolutionToGrid(int Sudoku[][SIZE]) {
     Sudoku[solution[i]->getRow() - 1][solution[i]->getColumn() - 1] =
         solution[i]->getCandidate();
   }
+
   for (int i(0); orig_values[i] != nullptr; i++) {
     Sudoku[orig_values[i]->getRow() - 1][orig_values[i]->getColumn() - 1] =
         orig_values[i]->getCandidate();
